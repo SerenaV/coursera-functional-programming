@@ -1,7 +1,1 @@
 console
-sbt
-console
-sbt console -java-home /usr/lib/jvm/java=7-openjdk-amd64/
-console
-dir
-console
