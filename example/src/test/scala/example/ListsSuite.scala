@@ -47,7 +47,7 @@ class ListsSuite extends FunSuite {
    * This allows tests to be written in a more readable manner:
    */
   test("one plus one is three?") {
-    assert(1 + 1 == 3) // This assertion fails! Go ahead and fix it.
+    assert(1 + 1 == 2) // This assertion fails! Go ahead and fix it.
   }
 
 
@@ -72,7 +72,7 @@ class ListsSuite extends FunSuite {
    * We recommend to always use the `===` equality operator when writing tests.
    */
   test("details why one plus one is not three") {
-    assert(1 + 1 === 3) // Fix me, please!
+    assert(1 + 1 === 2) // Fix me, please!
   }
 
 
@@ -114,11 +114,53 @@ class ListsSuite extends FunSuite {
    * however it is recommended to write an individual `test` statement for
    * every tested aspect of a method.
    */
+ // TESTING FOR SUM:
+  
   test("sum of a few numbers") {
     assert(sum(List(1,2,0)) === 3)
   }
   
+  test("sum of a few numbers including a negative number") {
+    assert(sum(List(-1,2,0)) === 1)
+  }
+ 
+  test("sum of all negative numbers") {
+    assert(sum(List(-2,-3,-1)) === -6)
+  }
+ 
+  test("sum of a few numbers including duplicates") {
+    assert(sum(List(-1,2,-1)) === 0)
+  }
+
+  test("sum of all zero's") {
+    assert(sum(List(0,0,0)) === 0)
+  }
+ 
+  test("sum of an empty list returns 0?") {
+    assert(sum(List()) === 0)
+  }
+ 
+ // TESTING FOR MAX:
+  
   test("max of a few numbers") {
     assert(max(List(3, 7, 2)) === 7)
+  }
+
+  test("max of a few numbers with duplicates") {
+    assert(max(List(3, 7, 7)) === 7)
+  }
+
+  test("max of a few numbers with negatives") {
+    assert(max(List(3, -7, 2)) === 3)
+  }
+  
+  test("max of a list with just zero") {
+    assert(max(List(0)) === 0)
+  }
+ 
+   test("max throws an exception if list is empty") {
+    intercept[NoSuchElementException] {
+      max(List())
+    }
   }
 }
