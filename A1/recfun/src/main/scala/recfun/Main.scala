@@ -23,6 +23,8 @@ object Main {
   
   /**
    * Exercise 2: Parentheses Balancing
+   * A function that recursively verifies the balancing of
+   * parentheses in a string (list of chars)
    */
   def balance(chars: List[Char]): Boolean = {
     def balanced(chars: List[Char], open: Int): Boolean = 
@@ -33,60 +35,36 @@ object Main {
     balanced(chars,0)
   } // end balance
   
-  /** or
-   Boolean = {
-    def f(chars: List[Char], numOpens: Int): Boolean = {
-      if (chars.isEmpty) {
-        numOpens == 0
-      } else {
-        val h = chars.head
-        val n =
-          if (h == '(') numOpens + 1
-          else if (h == ')') numOpens - 1
-          else numOpens
-        if (n >= 0) f(chars.tail, n)
-        else false
-      }
-    }
- 
-    f(chars, 0)
-   */
-  
-  
-  
-    /**
+  /**
    * Exercise 3: Counting Change
-   * Write a recursive function that counts how many different ways you can make
-   * change for an amount, given a list of coin denominations. For example,
-   * there are 3 ways to give change for 4 if you have coins with denomiation
-   * 1 and 2: 1+1+1+1, 1+1+2, 2+2.
+   * A function that recursively counts how many different ways you can make
+   * change for a given amount, given a list of coin denominations. 
    */
   def countChange(money: Int, coins: List[Int]): Int = {
-    def f(lastMaxCoin_total_coll: List[(Int, Int)], count: Int): Int = {
+    def counted(lastMaxCoin_total_coll: List[(Int, Int)], count: Int): Int = {
       if (lastMaxCoin_total_coll.isEmpty) {
         count
       } else {
-        val b = ListBuffer[(Int, Int)]()
+        val buffer = ListBuffer[(Int, Int)]()
         var newCount = count
         for ((lastMaxCoin, total) <- lastMaxCoin_total_coll) {
           if (total < money) {
             for (c <- coins) {
               if (c >= lastMaxCoin) {
                 val e = (c, total + c)
-                b += e
+                buffer += e
               }
             }
           } else if (total == money) {
             newCount += 1
           }
         }
- 
-        f(b.toList, newCount)
+        counted(buffer.toList, newCount)
       }
     }
  
-    val b = coins.map { c => (c, c) }
-    f(b, 0)
+    val buffer = coins.map { c => (c, c) }
+    counted(buffer, 0)
   } // end countChange
   
 } // end Main
