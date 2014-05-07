@@ -1,6 +1,5 @@
 package recfun
 
-import scala.collection.mutable.ListBuffer
 import common._
 
 object Main {
@@ -41,30 +40,13 @@ object Main {
    * change for a given amount, given a list of coin denominations. 
    */
   def countChange(money: Int, coins: List[Int]): Int = {
-    def counted(lastMaxCoin_total_coll: List[(Int, Int)], count: Int): Int = {
-      if (lastMaxCoin_total_coll.isEmpty) {
-        count
-      } else {
-        val buffer = ListBuffer[(Int, Int)]()
-        var newCount = count
-        for ((lastMaxCoin, total) <- lastMaxCoin_total_coll) {
-          if (total < money) {
-            for (c <- coins) {
-              if (c >= lastMaxCoin) {
-                val e = (c, total + c)
-                buffer += e
-              }
-            }
-          } else if (total == money) {
-            newCount += 1
-          }
-        }
-        counted(buffer.toList, newCount)
-      }
+    def count(capacity: Int, changes: List[Int]): Int = {
+    		if(capacity == 0)	1
+            else if(capacity < 0)	0
+            else if(changes.isEmpty && capacity >= 1 )	0
+            else	count(capacity, changes.tail) + count(capacity - changes.head, changes)
     }
- 
-    val buffer = coins.map { c => (c, c) }
-    counted(buffer, 0)
+    count(money, coins.sortWith(_.compareTo(_) < 0))
   } // end countChange
   
 } // end Main
